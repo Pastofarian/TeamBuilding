@@ -1,11 +1,11 @@
 <?php
 
 
-function recupAllInfoAdmin(){
+function recupAllInfoCP(){
 
   include_once('connection.php');
 
-  $query = "SELECT * FROM datas";
+  $query = "SELECT * FROM cp";
   $query_params = array();
   try
   {
@@ -22,5 +22,5 @@ function recupAllInfoAdmin(){
 // $result = recupAllInfoAdmin();
 // var_dump($result);
 // echo("test");
-// var_dump(recupAllInfoAdmin());
+//var_dump(recupAllInfoAdmin());
 
