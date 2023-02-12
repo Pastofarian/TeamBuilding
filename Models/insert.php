@@ -1,13 +1,16 @@
 <?php
 
-function insertDB($LastName, $FirstName, $DOB, $Email, $Password){
-    include_once('connection.php');
-    $query = "INSERT INTO datas (LastName, FirstName, DOB, Email, Password) VALUES(:LastName, :FirstName, :DOB, :Email, :Password)";
-        $query_params = array(':LastName'=>$LastName,
-                              ':FirstName'=>$FirstName,
-                                ':DOB'=>$DOB,
-                                ':Email'=>$Email,
-                                ':Password'=>$Password);
+function insertEmploye($LastName, $FirstName, $Email, $Diner, $Postcode, $Locomotion, $Department){
+    include('connection.php');
+    $query = "INSERT INTO employe (nom, prenom, mail, souper, fk_cp, fk_locomotion, fk_departement) VALUES(:nom, :prenom, :mail, :souper, :fk_cp, :fk_locomotion, :fk_departement)";
+    $query_params = array(':nom'=>$LastName,
+                              ':prenom'=>$FirstName,
+                                ':mail'=>$Email,
+                                ':souper'=>$Diner,
+                                ':fk_cp'=>$Postcode,
+                                ':fk_locomotion'=>$Locomotion,
+                                ':fk_departement'=>$Department);
+
         try{
             $stmt = $db->prepare($query);
             $result = $stmt->execute($query_params);
@@ -17,4 +20,4 @@ function insertDB($LastName, $FirstName, $DOB, $Email, $Password){
         }
 }
 
-//insertDB("Doe", "John", "2022-08-05", "john.doe@outlook.com", "pass");
+//insertDB("Doe", "John", "john.doe@outlook.com", "on", 1, 2, 2);

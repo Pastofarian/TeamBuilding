@@ -10,20 +10,19 @@
   </head>
   <body>
     <h1>Inscription journée du personnel</h1>
-     <!-- <form action="../Controlers/signin_login.php" method="POST"> -->
-    <form action="">
-      <label for="nom">Votre nom :</label>
-      <input type="text" id="nom" name="nom"><br><br>
-      <label for="prenom">Votre prénom :</label>
-      <input type="text" id="prenom" name="prenom"><br><br>
-      <label for="mail">Votre mail :</label>
-      <input type="email" id="mail" name="mail"><br><br>
-      <label for="code_postal">Votre code postal :</label>
-      <select id="code_postal" name="code_postal">
+    <form action="../Controlers/registration.php" method="POST">
+      <label for="lastname">Votre nom :</label>
+      <input type="text" name="lastname"><br><br>
+      <label for="firstname">Votre prénom :</label>
+      <input type="text" name="firstname"><br><br>
+      <label for="email">Votre mail :</label>
+      <input type="email" name="email"><br><br>
+      <label for="postcode">Votre code postal :</label>
+      <select name="postcode">
         <option value=""></option>
           <?php 
             session_start();
-            echo $_SESSION['CP']; 
+            echo $_SESSION['postcode']; 
           ?>
       </select><br><br>
       <label for="locomotion">Votre moyen de locomotion pour arriver :</label>
@@ -47,8 +46,8 @@
             echo $_SESSION['Activity'];
           ?>
       </select><br><br>
-      <label for="souper">Participerez-vous au souper au soir ?</label>
-      <input type="checkbox" id="souper" name="souper"><br><br>
+      <label for="diner">Participerez-vous au souper au soir ?</label>
+      <input type="checkbox" name="diner"><br><br>
       <input type="submit" value="Envoyer">
     </form>
   </body>
