@@ -1,11 +1,10 @@
 <?php
 
+function recupAllInfoDB($table){
 
-function recupAllInfoCP(){
+  include('connection.php');
 
-  include_once('connection.php');
-
-  $query = "SELECT * FROM cp";
+  $query = "SELECT * FROM $table";
   $query_params = array();
   try
   {
@@ -19,7 +18,7 @@ function recupAllInfoCP(){
   return (!empty($result)) ? $result: 'NULL';
 }
 
-// $result = recupAllInfoAdmin();
+// $result = recupAllInfoDB("Locomotion");
 // var_dump($result);
 // echo("test");
 //var_dump(recupAllInfoAdmin());

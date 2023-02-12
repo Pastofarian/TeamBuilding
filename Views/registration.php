@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <html>
   <head>
   <meta charset="UTF-8">
@@ -10,6 +10,7 @@
   </head>
   <body>
     <h1>Inscription journée du personnel</h1>
+     <!-- <form action="../Controlers/signin_login.php" method="POST"> -->
     <form action="">
       <label for="nom">Votre nom :</label>
       <input type="text" id="nom" name="nom"><br><br>
@@ -20,26 +21,31 @@
       <label for="code_postal">Votre code postal :</label>
       <select id="code_postal" name="code_postal">
         <option value=""></option>
-        <?php
-        session_start();
-        echo $_SESSION['CP'];
-        ?>
-        <!-- add options for different postal codes -->
+          <?php 
+            session_start();
+            echo $_SESSION['CP']; 
+          ?>
       </select><br><br>
       <label for="locomotion">Votre moyen de locomotion pour arriver :</label>
       <select id="locomotion" name="locomotion">
         <option value=""></option>
-        <!-- add options for different modes of transportation -->
+          <?php 
+            echo $_SESSION['Locomotion'];
+          ?>
       </select><br><br>
       <label for="department">Votre département au sein de la société :</label>
       <select id="department" name="department">
         <option value=""></option>
-        <!-- add options for different departments -->
+          <?php 
+            echo $_SESSION['Department'];
+          ?>
       </select><br><br>
       <label for="activity">Votre activité choisie :</label>
       <select id="activity" name="activity">
         <option value=""></option>
-        <!-- add options for different activities -->
+          <?php 
+            echo $_SESSION['Activity'];
+          ?>
       </select><br><br>
       <label for="souper">Participerez-vous au souper au soir ?</label>
       <input type="checkbox" id="souper" name="souper"><br><br>
