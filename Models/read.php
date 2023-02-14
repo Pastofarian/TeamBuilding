@@ -18,8 +18,8 @@ function recupAllInfoDB($table){
   return (!empty($result)) ? $result: 'NULL';
 }
 
-// $result = recupAllInfoDB("Locomotion");
-// var_dump($result);
+$result = recupAllInfoDB("activite");
+var_dump($result);
 // echo("test");
 //var_dump(recupAllInfoAdmin());
 

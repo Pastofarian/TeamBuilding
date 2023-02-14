@@ -26,21 +26,21 @@
           ?>
       </select><br><br>
       <label for="locomotion">Votre moyen de locomotion pour arriver :</label>
-      <select id="locomotion" name="locomotion">
+      <select name="locomotion">
         <option value=""></option>
           <?php 
             echo $_SESSION['Locomotion'];
           ?>
       </select><br><br>
       <label for="department">Votre département au sein de la société :</label>
-      <select id="department" name="department">
+      <select name="department">
         <option value=""></option>
           <?php 
             echo $_SESSION['Department'];
           ?>
       </select><br><br>
       <label for="activity">Votre activité choisie :</label>
-      <select id="activity" name="activity">
+      <select name="activity">
         <option value=""></option>
           <?php 
             echo $_SESSION['Activity'];

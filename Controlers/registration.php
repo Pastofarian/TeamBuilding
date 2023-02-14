@@ -20,33 +20,45 @@ foreach ($resultPostcode as $row) {
 }
 $_SESSION['postcode'] = $cp;
 
-//Option for the Locomotion
+//Locomotion's options
 $locomotion = '';
 foreach ($resultLocomotion as $row) {
   $locomotion .= '<option value="' . $row['id'] . '">' . $row['nom'] . '</option>';
 }
 $_SESSION['Locomotion'] = $locomotion;
 
-//Option for the Department
+//Department's options
 $department = '';
 foreach ($resultDepartment as $row) {
   $department .= '<option value="' . $row['id'] . '">' . $row['nom'] . '</option>';
 }
 $_SESSION['Department'] = $department;
 
-//Option for the Activity
+//Activity's options
 $activity = '';
 foreach ($resultActivity as $row) {
   $activity .= '<option value="' . $row['id'] . '">' . $row['nom'] . '</option>';
 }
 $_SESSION['Activity'] = $activity;
 
-insertEmploye($_POST["lastname"], $_POST["firstname"], $_POST["email"], $_POST["diner"], $_POST["postcode"], $_POST["locomotion"], $_POST["department"]);
+$lastname = isset($_POST["lastname"]);
+$firstname = isset($_POST["firstname"]);
+$email = isset($_POST["email"]);
+$diner = isset($_POST["diner"]) ? "oui" : "non";
+$postcode = isset($_POST["postcode"]);
+$locomotion = isset($_POST["locomotion"]);
+$department = isset($_POST["department"]);
+$activity = isset($_POST["activity"]);
+
+$employe_id = insertEmploye($lastname, $firstname, $email, $diner, $postcode, $locomotion, $department);
+
+insertActivity($activity, $employe_id);
+
+// $employe_id = insertEmploye($_POST["lastname"], $_POST["firstname"], $_POST["email"], $_POST["diner"], $_POST["postcode"], $_POST["locomotion"], $_POST["department"]);
+
+// insertActivity($_POST["activity"], $employe_id);
 
 
-// insertDB($_POST["name"], $_POST["firstname"], $_POST["email"], $_POST["email"], $data1);
-// header("Location: " . $login);
-
-// var_dump($_POST);
 
 // array(8) { ["name"]=> string(3) "Doe" ["firstname"]=> string(4) "John" ["email"]=> string(20) "john.doe@outlook.com" ["postcode"]=> string(1) "1" ["locomotion"]=> string(1) "1" ["department"]=> string(1) "2" ["activity"]=> string(1) "4" ["souper"]=> string(2) "on" } 
+
