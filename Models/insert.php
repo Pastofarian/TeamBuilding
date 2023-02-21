@@ -58,4 +58,19 @@ function insertActivity($activity, $employeId){
         }
 }
 
+function insertNewAdmin($email, $pass){
+    include('connection.php');
+    $query = "INSERT INTO admin (login, password) VALUES(:login, :password)";
+    $query_params = array(':login'=>$email,
+                              ':password'=>$pass);
 
+        try{
+            $stmt = $db->prepare($query);
+            $result = $stmt->execute($query_params);
+        }
+        catch(PDOException $ex){
+            die("Failed query : " . $ex->getMessage());
+        }
+}
+
+//insertNewAdmin("test1", "test");

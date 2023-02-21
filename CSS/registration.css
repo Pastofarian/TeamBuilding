@@ -54,3 +54,32 @@ input[type="submit"]:hover {
         width: 80%;
     }
 }
+
+.admin-button {
+    text-decoration: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+a {
+    color: white;
+}
+
+.admin-button:hover {
+    background-color: #3498db;
+}
+
+@media (max-width: 768px) {
+    .admin-button {
+        position: static;
+        display: block;
+        margin: 0 auto;
+        margin-top: 20px;
+    }
+}

@@ -9,6 +9,7 @@
     <title>Inscription journée du personnel</title>
   </head>
   <body>
+    <button class="admin-button"><a href="logAdmin.php">Admin</a></button>
     <h1>Inscription journée du personnel</h1>
     <form action="../Controlers/registration.php" method="POST">
       <label for="lastname">Votre nom :</label>
@@ -46,8 +47,9 @@
             echo $_SESSION['Activity'];
           ?>
       </select><br><br>
-      <label for="diner">Participerez-vous au souper au soir ?</label>
-      <input type="checkbox" name="diner"><br><br>
+      <label for="diner">Participerez-vous au souper au soir ?
+      <input type="checkbox" name="diner">
+      </label><br><br>
       <input type="submit" value="Envoyer">
     </form>
   </body>

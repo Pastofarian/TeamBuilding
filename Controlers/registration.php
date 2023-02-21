@@ -7,6 +7,7 @@ session_start();
 include('../Models/read.php');
 include('../Models/insert.php');
 
+$registration = 'Location: ../Views/registration.php';
 $resultPostcode = recupAllInfoDB("cp");
 $resultLocomotion = recupAllInfoDB("Locomotion");
 $resultDepartment = recupAllInfoDB("departement");
@@ -41,18 +42,21 @@ foreach ($resultActivity as $row) {
 }
 $_SESSION['Activity'] = $activity;
 
-$lastname = isset($_POST["lastname"]);
-$firstname = isset($_POST["firstname"]);
-$email = isset($_POST["email"]);
-$diner = isset($_POST["diner"]) ? "oui" : "non";
-$postcode = isset($_POST["postcode"]);
-$locomotion = isset($_POST["locomotion"]);
-$department = isset($_POST["department"]);
-$activity = isset($_POST["activity"]);
+$lastname = $_POST["lastname"];
+$firstname = $_POST["firstname"];
+$email = $_POST["email"];
+$diner = isset($_POST["diner"]) ? "oui" : "non"; //tinyint
+$postcode = $_POST["postcode"];
+$locomotion = $_POST["locomotion"];
+$department = $_POST["department"];
+$activity = $_POST["activity"];
 
 $employe_id = insertEmploye($lastname, $firstname, $email, $diner, $postcode, $locomotion, $department);
 
 insertActivity($activity, $employe_id);
+
+//var_dump($lastname);
+//header($registration);
 
 // $employe_id = insertEmploye($_POST["lastname"], $_POST["firstname"], $_POST["email"], $_POST["diner"], $_POST["postcode"], $_POST["locomotion"], $_POST["department"]);
 
