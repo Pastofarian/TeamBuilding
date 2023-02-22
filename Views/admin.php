@@ -1,3 +1,10 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+include("../Models/read.php");
+include("../Models/update.php");
+?>
 <!DOCTYPE html>
 <html lang="fr">
    <head>
@@ -9,6 +16,56 @@
    </head>
    <body>
       <main role="main">
+      <table>
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Mail</th>
+      <th>Code postal / Ville</th>
+      <th>Locomotion</th>
+      <th>Département</th>
+      <th>Souper</th>
+      <th>Update/Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php 
+    $employees = retrieveAllEmployees();
+    foreach ($employees as $row): ?>
+      <tr>
+        <td><?= $row['nom'] ?></td>
+        <td><?= $row['prenom'] ?></td>
+        <td><?= $row['mail'] ?></td>
+        <td><?= $row['cp'] ?></td>
+        <td><?= $row['locomotion'] ?></td>
+        <td><?= $row['departement'] ?></td>
+        <td><?= $row['souper'] ?></td>
+        <td>
+        <form method="POST" action="../Controlers/admin.php">
+  <input type="hidden" name="id" value="<?= $row['id'] ?>">
+  <input type="hidden" name="nom" value="<?= $row['nom'] ?>">
+  <input type="hidden" name="prenom" value="<?= $row['prenom'] ?>">
+  <input type="hidden" name="mail" value="<?= $row['mail'] ?>">
+  <input type="hidden" name="cp" value="<?= $row['cp'] ?>">
+  <input type="hidden" name="locomotion" value="<?= $row['locomotion'] ?>">
+  <input type="hidden" name="departement" value="<?= $row['departement'] ?>">
+  <input type="hidden" name="souper" value="<?= $row['souper'] ?>">
+  <button type="submit">Update</button>
+</form> 
+
+<form method="POST" action="../Controlers/admin.php">
+  <input type="hidden" name="id" value="<?= $row['id'] ?>">
+  <input type="hidden" name="action" value="delete">
+  <button type="submit">Delete</button>
+</form>
+
+        </td>
+      </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
+
          <h1 class="form-title">Ajouter un nouvel administrateur</h1>
          <form action="../Controlers/admin.php" method="POST" class="login-form">
             <p>
@@ -28,7 +85,6 @@
             </p>
          </form>
          <?php
-            session_start();
             error_reporting(0);
                echo $_SESSION["checkPassword"];
                echo'<pre>';

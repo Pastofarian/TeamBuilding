@@ -1,18 +1,24 @@
 <?php
-include_once('connection.php');
-function updateDB($id, $name, $price, $isVege, $isGlutenFree){
-    $query = "UPDATE `Ingredient` SET `name`=:name, `price`=:price, `isVege`=:isVege, `isGlutenFree`=:isGlutenFree WHERE `id` = :id";
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+function updateEmployee($id, $nom, $prenom, $mail, $fk_cp, $fk_locomotion, $fk_departement, $souper) {
+    include('connection.php');
+  
+    $query = 'UPDATE employe SET nom = :nom, prenom = :prenom, mail = :mail, fk_cp = :fk_cp, fk_locomotion = :fk_locomotion, fk_departement = :fk_departement, souper = :souper WHERE id = :id';
     $query_params = array(
-        ':id' => $id,
-        ':name' => $name,
-        ':price' => $price,
-        'isVege' => $isVege,
-        'isGlutenFree' => $isGlutenFree
+      ':id' => $id,
+      ':nom' => $nom,
+      ':prenom' => $prenom,
+      ':mail' => $mail,
+      ':fk_cp' => $fk_cp,
+      ':fk_locomotion' => $fk_locomotion,
+      ':fk_departement' => $fk_departement,
+      ':souper' => $souper
     );
     try {
-        $stmt = $db->prepare($query);
-        $result = $stmt->execute($query_params);
-    } catch(PDOException $ex){
-        die("Failed query : " . $ex->getMessage());
+      $stmt = $db->prepare($query);
+      $stmt->execute($query_params);
+    } catch (PDOException $ex) {
+      die("Failed query : " . $ex->getMessage());
     }
-}
+  }

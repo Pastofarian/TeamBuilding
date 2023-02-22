@@ -7,6 +7,25 @@ session_start();
 include("../Functions/functions.php");
 include("../Models/insert.php");
 
+include("../Models/delete.php");
+include("../Models/update.php");
+
+if (isset($_POST['action'])) {
+  $id = $_POST['id'];
+  if ($_POST['action'] == 'delete') {
+    deleteEmployee($id);
+  } else if ($_POST['action'] == 'update') {
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $mail = $_POST['mail'];
+    $cp = $_POST['cp'];
+    $locomotion = $_POST['locomotion'];
+    $departement = $_POST['departement'];
+    $souper = isset($_POST['souper']) ? 1 : 0;
+    updateEmployee($id, $nom, $prenom, $mail, $cp, $locomotion, $departement, $souper);
+  }
+}
+
 $admin = 'Location: ../Views/admin.php';
 $data1 = $_POST["PassNewAdmin"];
 unset($_POST["PassNewAdmin"]); //éfface les traces
@@ -32,6 +51,9 @@ if(
     insertNewAdmin($_POST["MailNewAdmin"], $data1);
 }
 header($admin);
+//header('Location: ../Models/update.php');
+exit();
+
 // var_dump($data1);
 
 //session_destroy();
