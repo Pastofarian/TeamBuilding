@@ -16,6 +16,7 @@ include("../Models/update.php");
    </head>
    <body>
       <main role="main">
+        <h1>Listing Participants</h1>
       <table>
   <thead>
     <tr>
@@ -63,6 +64,44 @@ include("../Models/update.php");
         </td>
       </tr>
     <?php endforeach; ?>
+  </tbody>
+</table>
+<table>
+  <thead>
+    <tr>
+      <th>Activité</th>
+      <th>Participants</th>
+      <th>Nom et Prénom des participants</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+
+    $activities = retrieveAllActivities();
+
+    foreach ($activities as $activity) {
+        $activityId = $activity['id'];
+        $activityName = $activity['nom'];
+        $activityMaxParticipants = $activity['nbmax'];
+        $participantsCount = retrieveParticipantsCount($activityId);
+        $participants = retrieveParticipants($activityId);
+    ?>
+      <tr>
+        <td><?= $activityName ?></td>
+        <td><?= $participantsCount ?>/<?= $activityMaxParticipants ?></td>
+        <td>
+          <?php if ($participantsCount > 0) { ?>
+            <ul>
+              <?php foreach ($participants as $participant) { ?>
+                <li><?= $participant['prenom'] ?> <?= $participant['nom'] ?></li>
+              <?php } ?>
+            </ul>
+          <?php } else { ?>
+            <p>Aucun participant inscrit pour cette activité.</p>
+          <?php } ?>
+        </td>
+      </tr>
+    <?php } ?>
   </tbody>
 </table>
 

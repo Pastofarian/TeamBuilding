@@ -40,7 +40,7 @@ $activity = '';
 foreach ($resultActivity as $row) {
   $activity .= '<option value="' . $row['id'] . '">' . $row['nom'] . '</option>';
 }
-$_SESSION['Activity'] = $activity;
+//$_SESSION['Activity'] = $activity;
 
 $lastname = $_POST["lastname"];
 $firstname = $_POST["firstname"];
@@ -55,8 +55,33 @@ $employe_id = insertEmploye($lastname, $firstname, $email, $diner, $postcode, $l
 
 insertActivity($activity, $employe_id);
 
+// $activityOptions = array();
+// $activities = retrieveAllActivities();
+// foreach ($activities as $activity) {
+//   $count = retrieveParticipantsCount($activity['id']);
+//   $max = $activity['nbmax'];
+//   $soldOut = ($count >= $max) ? " - COMPLET" : "";
+//   $activityOptions[] = array(
+//     'id' => $activity['id'],
+//     'nom' => $activity['nom'],
+//     'count' => $count,
+//     'max' => $max,
+//     'soldOut' => $soldOut
+//   );
+// }
+
+// $activityId = isset($_POST['activity']) ? $_POST['activity'] : null;
+// $participants = retrieveParticipants($activityId);
+// $soldOut = ($activityId && retrieveParticipantsCount($activityId) >= retrieveActivityMaxParticipants($activityId));
+
+// // Store variables in session
+// $_SESSION['ActivityOptions'] = $activityOptions;
+// $_SESSION['Participants'] = $participants;
+// $_SESSION['SoldOut'] = $soldOut;
+
+
 //var_dump($lastname);
-//header($registration);
+header($registration);
 
 // $employe_id = insertEmploye($_POST["lastname"], $_POST["firstname"], $_POST["email"], $_POST["diner"], $_POST["postcode"], $_POST["locomotion"], $_POST["department"]);
 

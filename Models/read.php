@@ -1,9 +1,7 @@
 <?php
 
 function recupAllInfoDB($table){
-
   include('connection.php');
-
   $query = "SELECT * FROM $table";
   $query_params = array();
   try
@@ -36,6 +34,54 @@ function retrieveAllEmployees() {
       die("Failed query : " . $ex->getMessage());
   }
 }
+
+function retrieveAllActivities() {
+  include('connection.php');
+  try {
+    $query = "SELECT * FROM activite";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+    $activities = $stmt->fetchAll(PDO::FETCH_ASSOC); //Fetches the remaining rows from a result set
+    return $activities;
+  } catch(PDOException $ex) {
+    die("Failed query: " . $ex->getMessage());
+  }
+}
+
+function retrieveParticipantsCount($activityId) {
+  include('connection.php');
+  try {
+    $query = "SELECT COUNT(*) as count FROM employe_activite WHERE fk_activite = :activityId";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(":activityId", $activityId);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['count'];
+  } catch(PDOException $ex) {
+    die("Failed query: " . $ex->getMessage());
+  }
+}
+
+function retrieveParticipants($activityId) {
+  include('connection.php');
+  
+  $query = "SELECT e.nom, e.prenom
+            FROM employe e
+            JOIN employe_activite ea ON e.id = ea.fk_employe
+            WHERE ea.fk_activite = :activityId";
+  $query_params = array(':activityId' => $activityId);
+  
+  try {
+    $stmt = $db->prepare($query);
+    $stmt->execute($query_params);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  } catch(PDOException $ex) {
+    die("Failed query : " . $ex->getMessage());
+  }
+  
+  return (!empty($result)) ? $result : NULL;
+}
+
 
 // $employees = retrieveAllEmployees();
 // var_dump($employees);
