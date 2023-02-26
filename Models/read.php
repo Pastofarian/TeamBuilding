@@ -82,6 +82,22 @@ function retrieveParticipants($activityId) {
   return (!empty($result)) ? $result : NULL;
 }
 
+function retrieveActivityMaxParticipants($activityId) {
+  include('connection.php');
+  
+  $query = "SELECT nbmax FROM activite WHERE id = :activityId";
+  $query_params = array(':activityId' => $activityId);
+  
+  try {
+    $stmt = $db->prepare($query);
+    $stmt->execute($query_params);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+  } catch(PDOException $ex) {
+    die("Failed query : " . $ex->getMessage());
+  }
+  
+  return (!empty($result)) ? $result['nbmax'] : NULL;
+}
 
 // $employees = retrieveAllEmployees();
 // var_dump($employees);

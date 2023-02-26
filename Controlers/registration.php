@@ -1,5 +1,4 @@
 <?php
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -7,87 +6,123 @@ session_start();
 include('../Models/read.php');
 include('../Models/insert.php');
 
+// Récupère les activités
+$activities = retrieveAllActivities();
+
+// boucle sur les activités pour le status sold out en fonction du nombre de participants
+$activityOptions = [];
+foreach ($activities as $activity) {
+$count = retrieveParticipantsCount($activity['id']);
+$max = $activity['nbmax'];
+$soldOut = ($count >= $max) ? " - COMPLET" : "";
+$activityOptions[] = [
+'id' => $activity['id'],
+'nom' => $activity['nom'],
+'count' => $count,
+'max' => $max,
+'soldOut' => $soldOut
+];
+}
+$_SESSION['ActivityOptions'] = $activityOptions;
+
 $registration = 'Location: ../Views/registration.php';
+$success = 'Location: ../Views/success.php';
+
+//Récupère les options de la table("table")
 $resultPostcode = recupAllInfoDB("cp");
 $resultLocomotion = recupAllInfoDB("Locomotion");
 $resultDepartment = recupAllInfoDB("departement");
 $resultActivity = recupAllInfoDB("activite");
 
-//Option for the CP
-// Impossible de créer une fonction pour appeler les options car pour le code postal il y a une colonne supplémentaire puis il faudrait 2 paramètres, ça fait beaucoup.
+//Options pour le CP
+// J'imagine que je pourrais créer un loop pour assigner ces variables mais ça marche comme ça
 $cp = '';
 foreach ($resultPostcode as $row) {
   $cp .= '<option value="' . $row['id'] . '">' . $row['cp'] . ' ' . $row['nom'] . '</option>';
 }
 $_SESSION['postcode'] = $cp;
 
-//Locomotion's options
+//Option pour locomotion
 $locomotion = '';
 foreach ($resultLocomotion as $row) {
   $locomotion .= '<option value="' . $row['id'] . '">' . $row['nom'] . '</option>';
 }
 $_SESSION['Locomotion'] = $locomotion;
 
-//Department's options
+//Option du département
 $department = '';
 foreach ($resultDepartment as $row) {
   $department .= '<option value="' . $row['id'] . '">' . $row['nom'] . '</option>';
 }
 $_SESSION['Department'] = $department;
 
-//Activity's options
+//Options des activités
 $activity = '';
 foreach ($resultActivity as $row) {
   $activity .= '<option value="' . $row['id'] . '">' . $row['nom'] . '</option>';
 }
-//$_SESSION['Activity'] = $activity;
 
-$lastname = $_POST["lastname"];
-$firstname = $_POST["firstname"];
-$email = $_POST["email"];
-$diner = isset($_POST["diner"]) ? "oui" : "non"; //tinyint
-$postcode = $_POST["postcode"];
-$locomotion = $_POST["locomotion"];
-$department = $_POST["department"];
-$activity = $_POST["activity"];
+$lastname = $_POST["lastname"] ?? "";
+$firstname = $_POST["firstname"] ?? "";
+$email = $_POST["email"] ?? "";
+$diner = isset($_POST["diner"]) ? "oui" : "non"; //Je préfere afficher oui ou non qu'un tinyint 
+$postcode = $_POST["postcode"] ?? "";
+$locomotion = $_POST["locomotion"] ?? "";
+$department = $_POST["department"] ?? "";
+$activity = $_POST["activity"] ?? "";
+
+// if(empty) pour eviter les erreurs "failed query"
+$errors = [];
+if (empty($lastname)) {
+  $errors[] = "Le nom est obligatoire";
+}
+if (empty($firstname)) {
+  $errors[] = "Le prénom est obligatoire";
+}
+if (empty($email)) {
+  $errors[] = "L'email est obligatoire";
+} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) { //doc php : Check if the variable $email is a valid email address:
+  $errors[] = "l'email n'est pas valide";
+}
+if (empty($postcode) || !is_numeric($postcode)) {
+  $errors[] = "Le mot de passe n'est pas valide";
+}
+if (empty($locomotion) || !is_numeric($locomotion)) {
+  $errors[] = "Le moyen de locomotion n'est pas valide";
+}
+if (empty($department) || !is_numeric($department)) {
+  $errors[] = "Le département n'est pas valide";
+}
+if (empty($activity) || !is_numeric($activity)) {
+  $errors[] = "L'activité n'est pas valide";
+}
+
+// Si $errors on reste sur la page
+if (!empty($errors)) {
+    $_SESSION['errors'] = $errors;
+    header($registration);
+    exit;
+  }
 
 $employe_id = insertEmploye($lastname, $firstname, $email, $diner, $postcode, $locomotion, $department);
 
-insertActivity($activity, $employe_id);
+if ($activity) {
+  insertActivity($activity, $employe_id);
+}
 
-// $activityOptions = array();
-// $activities = retrieveAllActivities();
-// foreach ($activities as $activity) {
-//   $count = retrieveParticipantsCount($activity['id']);
-//   $max = $activity['nbmax'];
-//   $soldOut = ($count >= $max) ? " - COMPLET" : "";
-//   $activityOptions[] = array(
-//     'id' => $activity['id'],
-//     'nom' => $activity['nom'],
-//     'count' => $count,
-//     'max' => $max,
-//     'soldOut' => $soldOut
-//   );
-// }
+// rassemble l'activité par participant
+$activityId = isset($_POST['activity']) ? $_POST['activity'] : null;
+$participants = retrieveParticipants($activityId);
 
-// $activityId = isset($_POST['activity']) ? $_POST['activity'] : null;
-// $participants = retrieveParticipants($activityId);
-// $soldOut = ($activityId && retrieveParticipantsCount($activityId) >= retrieveActivityMaxParticipants($activityId));
+// Vérifie si l'activité est sold out
+$soldOut = ($activityId && retrieveParticipantsCount($activityId) >= retrieveActivityMaxParticipants($activityId));
 
-// // Store variables in session
-// $_SESSION['ActivityOptions'] = $activityOptions;
-// $_SESSION['Participants'] = $participants;
-// $_SESSION['SoldOut'] = $soldOut;
+$_SESSION['Participants'] = $participants;
+$_SESSION['SoldOut'] = $soldOut;
 
+// Redirige vers la page d'inscription
+header("Location: ../Views/registration.php");
+//var_dump($_SESSION['ActivityOptions']);
+exit();
 
-//var_dump($lastname);
-header($registration);
-
-// $employe_id = insertEmploye($_POST["lastname"], $_POST["firstname"], $_POST["email"], $_POST["diner"], $_POST["postcode"], $_POST["locomotion"], $_POST["department"]);
-
-// insertActivity($_POST["activity"], $employe_id);
-
-
-
-// array(8) { ["name"]=> string(3) "Doe" ["firstname"]=> string(4) "John" ["email"]=> string(20) "john.doe@outlook.com" ["postcode"]=> string(1) "1" ["locomotion"]=> string(1) "1" ["department"]=> string(1) "2" ["activity"]=> string(1) "4" ["souper"]=> string(2) "on" } 
 

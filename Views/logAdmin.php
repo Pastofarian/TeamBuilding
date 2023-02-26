@@ -8,7 +8,7 @@
       <title>Administration</title>
    </head>
    <body>
-      <main role="main">
+   <button class="registration-button"><a href="registration.php">Retour inscription</a></button>
          <h1 class="form-title">Log in</h1>
          <form action="../Controlers/logAdmin.php" method="POST" class="login-form">
             <p>
@@ -31,6 +31,5 @@
               //session_destroy();
             }
          ?>
-      </main>
    </body>
 </html>
