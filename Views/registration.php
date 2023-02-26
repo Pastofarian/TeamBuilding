@@ -17,6 +17,16 @@ include("../Models/read.php");
     <button class="admin-button"><a href="logAdmin.php">Admin</a></button>
     <h1>Inscription journée du personnel</h1>
     <form action="../Controlers/registration.php" method="POST">
+    <?php  
+    if ($_SESSION['formSubmitted'] && isset($_SESSION['errors']) && !empty($_SESSION['errors'])) {
+    echo '<p>Erreurs :</p>';
+    echo '<ul>';
+    foreach ($_SESSION['errors'] as $error) {
+      echo '<li>' . $error . '</li>';
+    }
+    echo '</ul>';
+  }
+  ?>
       <label for="lastname">Votre nom :</label>
       <input type="text" name="lastname"><br><br>
       <label for="firstname">Votre prénom :</label>
@@ -64,19 +74,10 @@ include("../Models/read.php");
 if (isset($_SESSION['SoldOut']) && $_SESSION['SoldOut']) {
   echo '<p>Désolé, cette activité est complète.</p>';
 } else {
-  // affiche les participants inscrit si il y en a 
-  if (isset($_SESSION['Participants']) && !empty($_SESSION['Participants'])) {
-    echo '<p>Participants inscrits à cette activité :</p>';
-    echo '<ul>';
-    foreach ($_SESSION['Participants'] as $participant) {
-      echo '<li>' . $participant['nom'] . ' ' . $participant['prenom'] . '</li>';
-    }
-    echo '</ul>';
-  }
-  
   // Affiche le bouton envoyer si pas sold out
   echo '<input type="submit" value="Envoyer">';
 }
+//var_dump($_SESSION['formSubmitted']);
 ?>
 
 </form>

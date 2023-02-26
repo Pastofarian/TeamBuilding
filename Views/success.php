@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -12,7 +16,18 @@
       <div class="card">
         <h1>Merci pour votre inscription</h1>
         <p>Nous avons bien reçu votre inscription. Nous vous recontacterons prochainement pour vous confirmer votre participation.</p>
-        <img src="../images/check.png" alt="checkmark">
+        <img src="../Images/check.png" alt="checkmark">
+        <?php
+        // affiche les participants inscrit si il y en a 
+        if (isset($_SESSION['Participants']) && !empty($_SESSION['Participants'])) {
+          echo '<p>Participants inscrits à cette activité :</p>';
+          echo '<ul>';
+          foreach ($_SESSION['Participants'] as $participant) {
+            echo '<li>' . $participant['nom'] . ' ' . $participant['prenom'] . '</li>';
+          }
+          echo '</ul>';
+        }
+        ?>
       </div>
     </div>
   </body>

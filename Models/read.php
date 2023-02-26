@@ -103,4 +103,5 @@ function retrieveActivityMaxParticipants($activityId) {
 // var_dump($employees);
 // echo("test");
 //var_dump(recupAllInfoAdmin());
-
+// echo retrieveActivityMaxParticipants("2");
+// echo retrieveParticipantsCount("2");

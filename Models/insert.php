@@ -53,4 +53,5 @@ function insertNewAdmin($email, $pass){
         }
 }
 
+//insertActivity(2, 44);
 //insertNewAdmin("test1", "test");
