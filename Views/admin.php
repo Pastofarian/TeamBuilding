@@ -2,6 +2,9 @@
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+  if(!$_SESSION['loggedIn'])
+    header("Location: ../Views/logAdmin.php"); //redirige vers la page de log
+
 include("../Models/read.php");
 include("../Models/update.php");
 ?>
@@ -16,6 +19,9 @@ include("../Models/update.php");
    </head>
    <body>
       <main role="main">
+      <form action="../Controlers/admin.php" method="POST">
+    <button class="logout-button" type="submit" name="logout">Logout</button>
+</form>
         <h1>Listing Participants</h1>
       <table>
   <thead>
@@ -125,13 +131,20 @@ include("../Models/update.php");
          </form>
          <?php
             error_reporting(0);
-               echo $_SESSION["checkPassword"];
+              if (isset($_SESSION["checkPassword"])){
+                echo $_SESSION["checkPassword"];
+              }
                echo'<pre>';
-               echo $_SESSION["checkEmail"];
+               if (isset($_SESSION["checkEmail"])){
+                echo $_SESSION["checkEmail"];
+              }
                echo'<pre>';
-               echo $_SESSION["matchPassword"];
-               echo'<pre>';
-               echo $_SESSION["checkDuplicates"];
+               if (isset($_SESSION["matchPassword"])){
+                echo $_SESSION["matchPassword"];
+              }
+              if (isset($_SESSION["checkDuplicates"])){
+                echo $_SESSION["checkDuplicates"];
+              }
                echo'<pre>';
               //session_destroy();
          ?>

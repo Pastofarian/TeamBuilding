@@ -26,6 +26,11 @@ include("../Models/read.php");
     }
     echo '</ul>';
   }
+  // vérifie si l'activité n'est pas sold out
+if (isset($_SESSION['SoldOut']) && $_SESSION['SoldOut']) {
+  echo '<p>Désolé, cette activité est complète.</p>';
+} 
+//var_dump($_SESSION['formSubmitted']);
   ?>
       <label for="lastname">Votre nom :</label>
       <input type="text" name="lastname"><br><br>
@@ -68,18 +73,9 @@ include("../Models/read.php");
       <label for="diner">Participerez-vous au souper au soir ?
         <input type="checkbox" name="diner">
         </label><br><br>
-
-<?php
-// vérifie si l'activité n'est pas sold out
-if (isset($_SESSION['SoldOut']) && $_SESSION['SoldOut']) {
-  echo '<p>Désolé, cette activité est complète.</p>';
-} else {
-  // Affiche le bouton envoyer si pas sold out
-  echo '<input type="submit" value="Envoyer">';
-}
-//var_dump($_SESSION['formSubmitted']);
-?>
-
+        <?php
+          echo '<input type="submit" value="Envoyer">';
+        ?>
 </form>
 </body>
 </html>

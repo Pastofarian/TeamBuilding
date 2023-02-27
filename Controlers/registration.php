@@ -64,14 +64,14 @@ foreach ($resultActivity as $row) {
   $activity .= '<option value="' . $row['id'] . '">' . $row['nom'] . '</option>';
 }
 
-$lastname = $_POST["lastname"] ?? "";
-$firstname = $_POST["firstname"] ?? "";
-$email = $_POST["email"] ?? "";
+$lastname = sanitize_input($_POST["lastname"]) ?? "";
+$firstname = sanitize_input($_POST["firstname"]) ?? "";
+$email = sanitize_input($_POST["email"]) ?? "";
 $diner = isset($_POST["diner"]) ? "oui" : "non"; //Je préfere afficher oui ou non qu'un tinyint 
-$postcode = $_POST["postcode"] ?? "";
-$locomotion = $_POST["locomotion"] ?? "";
-$department = $_POST["department"] ?? "";
-$activity = $_POST["activity"] ?? "";
+$postcode = sanitize_input($_POST["postcode"]) ?? "";
+$locomotion = sanitize_input($_POST["locomotion"]) ?? "";
+$department = sanitize_input($_POST["department"]) ?? "";
+$activity = sanitize_input($_POST["activity"]) ?? "";
 $_SESSION['formSubmitted'] = !empty($_POST) ? true : false;
 
 $errors = [];
@@ -82,12 +82,21 @@ if (empty($firstname)) {
 $errors[] = "Le prénom est obligatoire";
 }
 if (empty($email)) {
-$errors[] = "L'email est obligatoire";
-} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) { //doc php : Check if the variable $email is a valid email address:
-$errors[] = "l'email n'est pas valide";
+  $errors[] = "L'email est obligatoire";
+} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  $errors[] = "L'email n'est pas valide";
+} else {
+  $result = recupAllInfoDB("employe");
+  for ($i = 0; $i < count($result); $i++) {
+    if ($email == $result[$i]['mail']) {
+      $errors[] = "Votre email est déjà dans notre base de données";
+      break;
+    }
+  }
 }
+
 if (empty($postcode) || !is_numeric($postcode)) {
-$errors[] = "Le mot de passe n'est pas valide";
+$errors[] = "Le code postal n'est pas valide";
 }
 if (empty($locomotion) || !is_numeric($locomotion)) {
 $errors[] = "Le moyen de locomotion n'est pas valide";
@@ -99,18 +108,7 @@ if (empty($activity) || !is_numeric($activity)) {
 $errors[] = "L'activité n'est pas valide";
 }
 
-// Si $errors on reste sur la page
-//if (!empty($errors)) {
-    
-
-    //exit;
-  //}
-//    else{
-      
-//        exit;
-//    }
-
-// rassemble l'activité par participant
+// rassemble les activités/participant
 $activityId = isset($_POST['activity']) ? $_POST['activity'] : null;
 $participants = retrieveParticipants($activityId);
 

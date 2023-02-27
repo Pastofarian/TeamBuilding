@@ -10,6 +10,12 @@ include("../Models/insert.php");
 include("../Models/delete.php");
 include("../Models/update.php");
 
+if (isset($_POST['logout'])) {
+  session_destroy();
+  header("Location: ../Views/logAdmin.php");
+  exit;
+}
+
 if (isset($_POST['action'])) {
   $id = $_POST['id'];
   if ($_POST['action'] == 'delete') {
