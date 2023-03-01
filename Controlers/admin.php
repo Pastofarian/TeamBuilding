@@ -10,31 +10,55 @@ include("../Models/insert.php");
 include("../Models/delete.php");
 include("../Models/update.php");
 
+$admin = "Location: ../Views/admin.php";
+$logAdmin = "Location: ../Views/logAdmin.php";
+
 if (isset($_POST['logout'])) {
   session_destroy();
-  header("Location: ../Views/logAdmin.php");
+  header($logAdmin);
   exit;
 }
 
-if (isset($_POST['action'])) {
-  $id = $_POST['id'];
-  if ($_POST['action'] == 'delete') {
-    deleteEmployee($id);
-  } else if ($_POST['action'] == 'update') {
-    $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
-    $mail = $_POST['mail'];
-    $cp = $_POST['cp'];
-    $locomotion = $_POST['locomotion'];
-    $departement = $_POST['departement'];
-    $souper = isset($_POST['souper']) ? 1 : 0;
-    updateEmployee($id, $nom, $prenom, $mail, $cp, $locomotion, $departement, $souper);
-  }
+// Delete participant
+if (isset($_POST['delete_participant'])) {
+  $participant_id = $_POST['participant_id'];
+  deleteEmployee($participant_id);
+  header($admin);
+  exit;
 }
 
-$admin = 'Location: ../Views/admin.php';
+
+
+if (isset($_POST['update_participant']) && $_POST['update_participant'] == 'update_participant') {
+  $participantId = $_POST['participant_id'];
+  $participantFirstName = $_POST['participant_first_name'];
+  $participantLastName = $_POST['participant_last_name'];
+  $participantEmail = $_POST['participant_email'];
+  $participantPostalCode = $_POST['postcode'];
+  $participantTransportationMode = $_POST['locomotion'];
+  $participantDepartment = $_POST['department'];
+  $participantDinnerPreference = $_POST['diner'];
+  
+  updateEmployee($participantId, $participantLastName, $participantFirstName, $participantEmail, $participantPostalCode, $participantTransportationMode, $participantDepartment, $participantDinnerPreference);
+  
+  header($admin);
+  exit;
+}
+
+//this works///////////////////////////
+if (isset($_POST['action']) && $_POST['action'] == 'update_activity') {
+    $activityId = $_POST['activity_id'];
+    $activityName = $_POST['activity_name'];
+    $activityMaxParticipants = $_POST['activity_max_participants'];
+    updateActivity($activityId, $activityName, $activityMaxParticipants);
+    header($admin);
+    exit;
+}
+///////////////////////////////
+
+
 $data1 = $_POST["PassNewAdmin"];
-unset($_POST["PassNewAdmin"]); //éfface les traces
+unset($_POST["PassNewAdmin"]); //Efface les traces
 $data2 = $_POST["PassNewAdmin2"];
 unset($_POST["PassNewAdmin2"]);
 

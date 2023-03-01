@@ -99,9 +99,12 @@ function retrieveActivityMaxParticipants($activityId) {
   return (!empty($result)) ? $result['nbmax'] : NULL;
 }
 
-// $employees = retrieveAllEmployees();
-// var_dump($employees);
-// echo("test");
+//$employees = retrieveAllEmployees();
+//var_dump($employees);
+
+
+ 
+// echo "test";
 //var_dump(recupAllInfoAdmin());
 // echo retrieveActivityMaxParticipants("2");
 // echo retrieveParticipantsCount("2");

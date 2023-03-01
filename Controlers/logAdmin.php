@@ -6,7 +6,7 @@ include("../Models/read.php");
 
 $result = recupAllInfoDB("admin");
 
-$logLine; //1 user/password
+$logLine; //1 admin/password
 $isPassAndLogOk = false;
 $islogOk = false;
 $error = false;

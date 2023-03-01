@@ -7,11 +7,13 @@ session_start();
 include('../Models/insert.php');
 include('../Functions/functions.php');
 
+$registration = 'Location: ../Views/registration.php';
+$success = 'Location: ../Views/success.php';
 
 // Récupère les activités
 $activities = retrieveAllActivities();
 
-// boucle sur les activités pour le status sold out en fonction du nombre de participants
+// Boucle sur les activités pour le status sold out en fonction du nombre de participants
 $activityOptions = [];
 foreach ($activities as $activity) {
 $count = retrieveParticipantsCount($activity['id']);
@@ -27,8 +29,6 @@ $activityOptions[] = [
 }
 $_SESSION['ActivityOptions'] = $activityOptions;
 
-$registration = 'Location: ../Views/registration.php';
-$success = 'Location: ../Views/success.php';
 
 //Récupère les options de la table("table")
 $resultPostcode = recupAllInfoDB("cp");
@@ -36,8 +36,8 @@ $resultLocomotion = recupAllInfoDB("Locomotion");
 $resultDepartment = recupAllInfoDB("departement");
 $resultActivity = recupAllInfoDB("activite");
 
+// J'imagine que je pourrais créer un loop pour assigner ces variables... -_*
 //Options pour le CP
-// J'imagine que je pourrais créer un loop pour assigner ces variables
 $cp = '';
 foreach ($resultPostcode as $row) {
   $cp .= '<option value="' . $row['id'] . '">' . $row['cp'] . ' ' . $row['nom'] . '</option>';
@@ -57,12 +57,6 @@ foreach ($resultDepartment as $row) {
   $department .= '<option value="' . $row['id'] . '">' . $row['nom'] . '</option>';
 }
 $_SESSION['Department'] = $department;
-
-//Options des activités
-$activity = '';
-foreach ($resultActivity as $row) {
-  $activity .= '<option value="' . $row['id'] . '">' . $row['nom'] . '</option>';
-}
 
 $lastname = sanitize_input($_POST["lastname"]) ?? "";
 $firstname = sanitize_input($_POST["firstname"]) ?? "";
@@ -89,7 +83,7 @@ if (empty($email)) {
   $result = recupAllInfoDB("employe");
   for ($i = 0; $i < count($result); $i++) {
     if ($email == $result[$i]['mail']) {
-      $errors[] = "Votre email est déjà dans notre base de données";
+      $errors[] = "Votre email est déjà dans notre base de données"; 
       break;
     }
   }
@@ -108,7 +102,7 @@ if (empty($activity) || !is_numeric($activity)) {
 $errors[] = "L'activité n'est pas valide";
 }
 
-// rassemble les activités/participant
+// rassemble les activités par participant
 $activityId = isset($_POST['activity']) ? $_POST['activity'] : null;
 $participants = retrieveParticipants($activityId);
 
