@@ -1,4 +1,11 @@
 body {
+    background-image: url("../Images/wallpaper2.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     margin: 0;
@@ -14,7 +21,7 @@ body {
 }
 
 .card {
-    background-color: white;
+    background-color: rgba(249, 249, 249, 0.8);
     border: 2px solid #ddd;
     border-radius: 5px;
     padding: 40px;

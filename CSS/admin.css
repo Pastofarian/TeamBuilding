@@ -1,15 +1,37 @@
 body {
+    background-image: url("../Images/wallpaper2.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    background-color: rgba(249, 249, 249, 0.8);
     margin: 0;
 }
 
 table {
+    max-width: 300px;
+    margin: 0 auto;
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 20px;
-    background-color: white;
+    background-color: rgba(249, 249, 249, 0.8);
 }
+
+.activities {
+    width: 80%;
+    margin: 0 auto;
+    max-width: none;
+}
+
+input[type="text"] {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-width: 150px;
+}
+
 
 thead {
     background-color: #3498db;
@@ -23,14 +45,14 @@ td {
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: rgba(249, 249, 249, 0.8);
 }
 
 .login-form {
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: rgba(249, 249, 249, 0.8);
     border: 2px solid #ddd;
     border-radius: 5px;
 }

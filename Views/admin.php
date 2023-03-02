@@ -14,10 +14,10 @@
    
    $employees = retrieveAllEmployees();
    $activities = retrieveAllActivities();
-
-//    foreach ($employees as $row){
-//     echo $row['locomotion'];
-//    }
+   
+   //    foreach ($employees as $row){
+   //     echo $row['locomotion'];
+   //    }
    
    ?>
 <!DOCTYPE html>
@@ -49,44 +49,48 @@
                </tr>
             </thead>
             <tbody>
-  <?php foreach ($employees as $row): ?>
-    <tr>
-      <form method="POST" action="../Controlers/admin.php">
-        <input type="hidden" name="participant_id" value="<?= $row['id'] ?>">
-        <td><input type="text" name="participant_last_name" value="<?= $row['nom'] ?>"></td>
-        <td><input type="text" name="participant_first_name" value="<?= $row['prenom'] ?>"></td>
-        <td><input type="email" name="participant_email" value="<?= $row['mail'] ?>"></td>
-        <td>
-          <select name="postcode">
-            <option value="<?= $row['cp'] ?>"></option>
-            <?php echo $_SESSION['postcode']; ?>
-          </select>
-        </td>
-        <td>
-          <select name="locomotion">
-            <option value="<?= $row['locomotion'] ?>"></option>
-            <?php echo $_SESSION['Locomotion']; ?>
-          </select>
-        </td>
-        <td>
-          <select name="department">
-            <option value="<?=$row['departement']?>"></option>
-            <?php echo $_SESSION['Department']; ?>
-          </select>
-        </td>
-        <td><input type="checkbox" name="diner"></td>
-        <td>
-          <button type="submit" name="update_participant" value="update_participant">Modifier</button>
-          <button type="submit" name="delete_participant" value="delete_participant">Supprimer</button>
-        </td>
-      </form>
-    </tr>
-  <?php endforeach; ?>
-</tbody>
-
+               <?php foreach ($employees as $row): ?>
+               <tr>
+                  <form method="POST" action="../Controlers/admin.php">
+                     <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                     <td><input type="text" name="last_name" value="<?= $row['nom'] ?>"></td>
+                     <td><input type="text" name="first_name" value="<?= $row['prenom'] ?>"></td>
+                     <td><input type="email" name="email" value="<?= $row['mail'] ?>"></td>
+                     <td>
+                        <select name="postcode">
+                           <option value="1300 Wavre" <?php if ($row['cp'] == '1300 Wavre') echo 'selected'; ?>>1300 Wavre</option>
+                           <option value="1301 Bierge" <?php if ($row['cp'] == '1301 Bierge') echo 'selected'; ?>>1301 Bierge</option>
+                           <option value="1310 La Hulpe" <?php if ($row['cp'] == '1310 La Hulpe') echo 'selected'; ?>>1310 La Hulpe</option>
+                        </select>
+                     </td>
+                     <td>
+                        <select name="locomotion">
+                           <option value="Voiture" <?php if ($row['locomotion'] == 'Voiture') echo 'selected'; ?>>Voiture</option>
+                           <option value="Train" <?php if ($row['locomotion'] == 'Train') echo 'selected'; ?>>Train</option>
+                           <option value="Bus" <?php if ($row['locomotion'] == 'Bus') echo 'selected'; ?>>Bus</option>
+                           <option value="Vélo" <?php if ($row['locomotion'] == 'Vélo') echo 'selected'; ?>>Vélo</option>
+                        </select>
+                     </td>
+                     <td>
+                        <select name="department">
+                           <option value="Comptabilité" <?php if ($row['departement'] == 'Comptabilité') echo 'selected'; ?>>Comptabilité</option>
+                           <option value="R&D" <?php if ($row['departement'] == 'R&D') echo 'selected'; ?>>R&D</option>
+                           <option value="ICT" <?php if ($row['departement'] == 'ICT') echo 'selected'; ?>>ICT</option>
+                           <option value="HR" <?php if ($row['departement'] == 'HR') echo 'selected'; ?>>HR</option>
+                        </select>
+                     </td>
+                     <td><input type="text" name="diner" value="<?= $row['souper'] ?>"></td>
+                     <td>
+                        <button type="submit" name="update_participant" value="update_participant">Modifier</button>
+                        <button type="submit" name="delete_participant" value="delete_participant">Supprimer</button>
+                     </td>
+                  </form>
+               </tr>
+               <?php endforeach; ?>
+            </tbody>
          </table>
          <h1>Mise à jour des activités</h1>
-         <table>
+         <table class="activities">
             <thead>
                <tr>
                   <th>Nom de l'activité</th>
@@ -126,27 +130,27 @@
             </p>
          </form>
          <?php
-         //affiche les erreurs (empty, pas valide, ...) seulement si le form a été complété
-         if ($_SESSION['formSubmitted'] && isset($_SESSION['errors']) && !empty($_SESSION['errors'])) {
-            //error_reporting(0);
-              if (isset($_SESSION["checkPassword"])){
-                echo $_SESSION["checkPassword"];
-              }
-               echo'<pre>';
-               if (isset($_SESSION["checkEmail"])){
-                echo $_SESSION["checkEmail"];
-              }
-               echo'<pre>';
-               if (isset($_SESSION["matchPassword"])){
-                echo $_SESSION["matchPassword"];
-              }
-              if (isset($_SESSION["checkDuplicates"])){
-                echo $_SESSION["checkDuplicates"];
-              }
-               echo'<pre>';
-              //session_destroy();
-            }
-         ?>
+            //affiche les erreurs (empty, pas valide, ...) seulement si le form a été complété
+            if ($_SESSION['formSubmitted'] && isset($_SESSION['errors']) && !empty($_SESSION['errors'])) {
+               //error_reporting(0);
+                 if (isset($_SESSION["checkPassword"])){
+                   echo $_SESSION["checkPassword"];
+                 }
+                  echo'<pre>';
+                  if (isset($_SESSION["checkEmail"])){
+                   echo $_SESSION["checkEmail"];
+                 }
+                  echo'<pre>';
+                  if (isset($_SESSION["matchPassword"])){
+                   echo $_SESSION["matchPassword"];
+                 }
+                 if (isset($_SESSION["checkDuplicates"])){
+                   echo $_SESSION["checkDuplicates"];
+                 }
+                  echo'<pre>';
+                 //session_destroy();
+               }
+            ?>
       </main>
    </body>
 </html>

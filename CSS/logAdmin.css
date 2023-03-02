@@ -1,3 +1,10 @@
+body {
+    background-image: url("../Images/wallpaper2.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
 .form-title {
     font-size: 2rem;
     text-align: center;

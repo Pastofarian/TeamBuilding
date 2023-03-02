@@ -1,3 +1,10 @@
+body {
+    background-image: url("../Images/wallpaper2.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
 form {
     width: 50%;
     margin: 0 auto;
@@ -5,7 +12,7 @@ form {
     padding: 20px;
     border: 2px solid #f2f2f2;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: rgba(249, 249, 249, 0.7);
 }
 
 label,
