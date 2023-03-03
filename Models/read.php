@@ -1,5 +1,8 @@
 <?php
 
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+
 function recupAllInfoDB($table){
   include('connection.php');
   $query = "SELECT * FROM $table";
@@ -41,7 +44,7 @@ function retrieveAllActivities() {
     $query = "SELECT * FROM activite";
     $stmt = $db->prepare($query);
     $stmt->execute();
-    $activities = $stmt->fetchAll(PDO::FETCH_ASSOC); //Fetches the remaining rows from a result set
+    $activities = $stmt->fetchAll(PDO::FETCH_ASSOC); 
     return $activities;
   } catch(PDOException $ex) {
     die("Failed query: " . $ex->getMessage());
@@ -99,10 +102,32 @@ function retrieveActivityMaxParticipants($activityId) {
   return (!empty($result)) ? $result['nbmax'] : NULL;
 }
 
-//$employees = retrieveAllEmployees();
-//var_dump($employees);
+function getActivityName($participantId) {
+  include('connection.php');
+  
+  $query = "SELECT a.nom
+            FROM activite a
+            JOIN employe_activite ea ON a.id = ea.fk_activite
+            WHERE ea.fk_employe = :participantId";
+  $query_params = array(':participantId' => $participantId);
+  
+  try {
+    $stmt = $db->prepare($query);
+    $stmt->execute($query_params);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+  } catch(PDOException $ex) {
+    die("Failed query : " . $ex->getMessage());
+  }
+  
+  return (!empty($result)) ? $result['nom'] : NULL;
+}
 
 
+// $employees = retrieveAllEmployees();
+// var_dump($employees);
+
+// $activityName = getActivityName("44");
+// echo $activityName;
  
 // echo "test";
 //var_dump(recupAllInfoAdmin());

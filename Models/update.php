@@ -1,33 +1,38 @@
 <?php
 
-//this works
-function updateParticipant($id, $nom, $prenom, $mail, $cp, $locomotion, $departement, $souper) {
+function updateParticipant($id, $nom, $prenom, $mail, $cp, $locomotion, $departement, $souper, $activity) {
   include("connection.php");
   try {
-      $stmt = $db->prepare('UPDATE employe SET nom = ?, prenom = ?, mail = ?, fk_cp = ?, fk_locomotion = ?, fk_departement = ?, souper = ? WHERE id = ?');
-      $stmt->execute([$nom, $prenom, $mail, $cp, $locomotion, $departement, $souper, $id]);
-      $stmt = null;
-      $pdo = null;
+    $stmt = $db->prepare('UPDATE employe SET nom = ?, prenom = ?, mail = ?, fk_cp = ?, fk_locomotion = ?, fk_departement = ?, souper = ? WHERE id = ?');
+    $stmt->execute([$nom, $prenom, $mail, $cp, $locomotion, $departement, $souper, $id]);
+
+    $stmt = $db->prepare('UPDATE employe_activite SET fk_activite = ? WHERE fk_employe = ?');
+    $stmt->execute([$activity, $id]);
+
+    $stmt = null;
+    $pdo = null;
   } catch (PDOException $e) {
-      die("Error occurred while updating employee: " . $e->getMessage());
+    die("Error occurred while updating employee: " . $e->getMessage());
   }
 }
 
-// function updateParticipant($id, $nom, $prenom, $mail, $cp, $locomotion, $departement, $diner) {
-//   include('connection.php');
-  
-//   try {
-//     $cpId = getCpId($cp);
-//     $locomotionId = getLocomotionId($locomotion);
-//     $departmentId = getDepartmentId($departement);
-    
-//     $stmt = $db->prepare('UPDATE employe SET nom = ?, prenom = ?, mail = ?, fk_cp = ?, fk_locomotion = ?, fk_departement = ?, souper = ? WHERE id = ?');
-//     $stmt->execute(array($nom, $prenom, $mail, $cpId, $locomotionId, $departmentId, $diner, $id));
-  
-//   } catch (PDOException $ex) {
-//     die("Error occurred while updating employee: " . $ex->getMessage());
-//   }
-// }
+
+function getActivityId($name) {
+  switch ($name) {
+    case 'Atelier cuisine':
+      return 1;
+    case 'Simulation de courses (jeux sur console)':
+      return 2;
+    case 'Course de karting':
+      return 3;
+    case 'Escape Game':
+      return 4;
+    case 'Ne participe pas':
+      return 5;
+      default:
+      return null;
+  }
+}
 
 function getDepartmentId($name) {
   switch ($name) {
@@ -84,5 +89,6 @@ function updateActivity($activityId, $activityName, $activityMaxParticipants) {
       die("Error occurred while updating activity: " . $e->getMessage());
   }
 }
+
 
 //updateParticipant(1, "Doe", "John", "johndoe@test.be", 2, 3, 1, "oui");

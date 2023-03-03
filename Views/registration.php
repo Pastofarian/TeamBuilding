@@ -1,7 +1,7 @@
 <?php
    session_start();
-   error_reporting(E_ALL);
-   ini_set('display_errors', 1);
+   // error_reporting(E_ALL);
+   // ini_set('display_errors', 1);
    ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -17,21 +17,21 @@
       <h1>Inscription journée du personnel</h1>
       <form action="../Controlers/registration.php" method="POST">
          <?php  
-         //affiche les erreurs (empty, pas valide, ...) seulement si le form a été complété
-            if ($_SESSION['formSubmitted'] && isset($_SESSION['errors']) && !empty($_SESSION['errors'])) {
-            echo '<p>Erreurs :</p>';
-            echo '<ul>';
-            foreach ($_SESSION['errors'] as $error) {
-              echo '<li>' . $error . '</li>';
-            }
-            echo '</ul>';
-            }
-            // vérifie si l'activité n'est pas sold out
-            if (isset($_SESSION['SoldOut']) && $_SESSION['SoldOut']) {
-            echo '<p>Désolé, cette activité est complète.</p>';
-            } 
-            //var_dump($_SESSION['formSubmitted']);
-            ?>
+            //affiche les erreurs (empty, pas valide, ...) seulement si le form a été complété
+            if (isset($_SESSION['formSubmitted']) && $_SESSION['formSubmitted'] && isset($_SESSION['errors']) && !empty($_SESSION['errors'])) {
+               echo '<p>Erreurs :</p>';
+               echo '<ul>';
+               foreach ($_SESSION['errors'] as $error) {
+                 echo '<li>' . $error . '</li>';
+               }
+               echo '</ul>';
+               }
+               // vérifie si l'activité n'est pas sold out
+               if (isset($_SESSION['SoldOut']) && $_SESSION['SoldOut']) {
+               echo '<p>Désolé, cette activité est complète.</p>';
+               } 
+               //var_dump($_SESSION['formSubmitted']);
+               ?>
          <label for="lastname">Votre nom :</label>
          <input type="text" required="required" name="lastname"><br><br>
          <label for="firstname">Votre prénom :</label>

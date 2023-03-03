@@ -6,7 +6,7 @@ include("../Models/read.php");
 
 $result = recupAllInfoDB("admin");
 
-$logLine; //1 admin/password
+$logLine = null; //1 admin/password
 $isPassAndLogOk = false;
 $islogOk = false;
 $error = false;
@@ -28,11 +28,12 @@ for($i = 0; $i < (count($result)); $i++){
 }
 
 // check si le password correspond bien au log (2 users peuvent avoir le même pw)
-    if(password_verify($data, $result[$logLine]['password'])){
-        $isPassAndLogOk = true;
-    }else {
-        $error = true;
-    }
+if ($logLine !== null || password_verify($data, $result[$logLine]['password'])) {
+    $isPassAndLogOk = true;
+  } else {
+    $error = true;
+  }
+  
 
 // si erreur, affiche dans le formulaire login
 if($error){

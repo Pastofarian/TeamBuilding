@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 session_start();
 include("../Functions/functions.php");
@@ -26,38 +26,6 @@ if (isset($_POST['delete_participant'])) {
 }
 
 // Update participant
-// if (isset($_POST['update_participant']) && $_POST['update_participant'] == 'update_participant') {
-//   $id = $_POST['id'];
-//   $firstName = $_POST['first_name'];
-//   $lastName = $_POST['last_name'];
-//   $email = $_POST['email'];
-//   $postcode = $_POST['postcode'];
-//   $locomotion = $_POST['locomotion'];
-//   $department = getDepartmentId($_POST['department']);
-//   $diner = $_POST['diner'];
-  
-//   updateParticipant($id, $lastName, $firstName, $email, $postcode, $locomotion, $department, $diner);
-  
-//   echo $id;
-//   echo ' <br>';
-//   echo $firstName;
-//   echo ' <br>';
-//   echo $lastName;
-//   echo ' <br>';
-//   echo $email;
-//   echo ' <br>';
-//   echo $postcode;
-//   echo ' <br>';
-//   echo $locomotion;
-//   echo ' <br>';
-//   echo $department;
-//   echo ' <br>';
-//   echo $diner;
-// $cpId = getCpId($cp);
-// $locomotionId = getLocomotionId($locomotion);
-// $departmentId = getDepartmentId($departement);
-
-// Update participant
 if (isset($_POST['update_participant']) && $_POST['update_participant'] == 'update_participant') {
   $id = $_POST['id'];
   $firstName = $_POST['first_name'];
@@ -67,13 +35,12 @@ if (isset($_POST['update_participant']) && $_POST['update_participant'] == 'upda
   $locomotion = getLocomotionId($_POST['locomotion']);
   $department = getDepartmentId($_POST['department']);
   $diner = $_POST['diner'];
-  
-  updateParticipant($id, $lastName, $firstName, $email, $postcode, $locomotion, $department, $diner);
+  $activity = getActivityId($_POST['activity']);
+  //var_dump($_POST);
+  updateParticipant($id, $lastName, $firstName, $email, $postcode, $locomotion, $department, $diner, $activity);
   header($admin);
   exit;
 }
-
-
 
 // Update activity
 if (isset($_POST['action']) && $_POST['action'] == 'update_activity') {
@@ -97,16 +64,22 @@ if (isset($_POST["PassNewAdmin2"])) {
 }
 
 if (isset($_POST["MailNewAdmin"])) {
-  $mail = $_POST["MailNewAdmin"];
+  $email = $_POST["MailNewAdmin"];
   unset($_POST["MailNewAdmin"]);
 }
 
 
+// $data1 = isset($_POST["PassNewAdmin"]) ? $_POST["PassNewAdmin"] : "";
+// $data2 = isset($_POST["PassNewAdmin2"]) ? $_POST["PassNewAdmin2"] : "";
+// $email = isset($_POST["MailNewAdmin"]) ? $_POST["MailNewAdmin"] : "";
+
 $_SESSION["checkEmpty"] = checkEmpty($_POST);
 $_SESSION["matchPassword"] = MatchPassword($data1, $data2);
-$_SESSION["checkEmail"] = checkEmail($_POST["MailNewAdmin"]);
+$_SESSION["checkEmail"] = checkEmail($email);
 $_SESSION["checkPassword"] = checkPassword($data1);
-$_SESSION["checkDuplicates"] = duplicates($_POST["MailNewAdmin"]);
+$_SESSION["checkDuplicates"] = duplicates($email);
+$_SESSION['adminFormSubmitted'] = !empty($_POST) ? true : false;
+
 
 $data1 = password_hash($data1,PASSWORD_BCRYPT); // Écrase data1 avec le mot de passe crypté
 
@@ -118,8 +91,13 @@ if (
     !empty($_SESSION["checkDuplicates"])
 ) {
 } else {
-    insertNewAdmin($_POST["MailNewAdmin"], $data1);
-}
+    insertNewAdmin($email, $data1);
+ }
+// echo $email;
+// echo $data1;
+header($admin);
+exit();
 
-//header($admin);
-//exit();
+// $cpId = getCpId($cp);
+// $locomotionId = getLocomotionId($locomotion);
+// $departmentId = getDepartmentId($departement);

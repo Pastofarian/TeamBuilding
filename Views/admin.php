@@ -1,7 +1,7 @@
 <?php
    session_start();
-   error_reporting(E_ALL);
-   ini_set('display_errors', 1);
+   // error_reporting(E_ALL);
+   // ini_set('display_errors', 1);
    
    //Evite l'accès direct par URL
    if (!$_SESSION['loggedIn']) {
@@ -15,10 +15,7 @@
    $employees = retrieveAllEmployees();
    $activities = retrieveAllActivities();
    
-   //    foreach ($employees as $row){
-   //     echo $row['locomotion'];
-   //    }
-   
+   //var_dump($activities);
    ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -45,6 +42,7 @@
                   <th>Locomotion</th>
                   <th>Département</th>
                   <th>Souper</th>
+                  <th>Activité</th>
                   <th>Actions</th>
                </tr>
             </thead>
@@ -79,7 +77,21 @@
                            <option value="HR" <?php if ($row['departement'] == 'HR') echo 'selected'; ?>>HR</option>
                         </select>
                      </td>
-                     <td><input type="text" name="diner" value="<?= $row['souper'] ?>"></td>
+                     <td>
+                        <select name="diner">
+                           <option value="oui" <?php if ($row['souper'] == 'oui') echo 'selected'; ?>>Oui</option>
+                           <option value="non" <?php if ($row['souper'] == 'non') echo 'selected'; ?>>Non</option>
+                        </select>
+                     </td>
+                     <td>
+                        <select name="activity">
+                           <option value="Atelier cuisine" <?php if (getActivityName($row['id']) == 'Atelier cuisine') echo 'selected'; ?>>Atelier cuisine</option>
+                           <option value="Simulation de courses (jeux sur console)" <?php if (getActivityName($row['id']) == 'Simulation de courses (jeux sur console)') echo 'selected'; ?>>Simulation de courses (jeux sur console)</option>
+                           <option value="Course de karting" <?php if (getActivityName($row['id']) == 'Course de karting') echo 'selected'; ?>>Course de karting</option>
+                           <option value="Escape Game" <?php if (getActivityName($row['id']) == 'Escape Game') echo 'selected'; ?>>Escape Game</option>
+                           <option value="Ne participe pas" <?php if (getActivityName($row['id']) == 'Ne participe pas') echo 'selected'; ?>>Ne participe pas</option>
+                        </select>
+                     </td>
                      <td>
                         <button type="submit" name="update_participant" value="update_participant">Modifier</button>
                         <button type="submit" name="delete_participant" value="delete_participant">Supprimer</button>
@@ -128,29 +140,29 @@
             <p>
                <input type="submit" value="Envoyer" id="submit" class="form-button">
             </p>
+            <?php
+               //affiche les erreurs (empty, pas valide, ...) seulement si le form a été complété
+                if (isset($_SESSION['errors']) && !empty($_SESSION['errors'])) {
+               //    //error_reporting(0);
+                    if (isset($_SESSION["checkPassword"])){
+                      echo $_SESSION["checkPassword"];
+                    }
+                     echo'<pre>';
+                     if (isset($_SESSION["checkEmail"])){
+                      echo $_SESSION["checkEmail"];
+                    }
+                     echo'<pre>';
+                     if (isset($_SESSION["matchPassword"])){
+                      echo $_SESSION["matchPassword"];
+                    }
+                    if (isset($_SESSION["checkDuplicates"])){
+                      echo $_SESSION["checkDuplicates"];
+                    }
+                     echo'<pre>';
+                    //session_destroy();
+                  }
+               ?>
          </form>
-         <?php
-            //affiche les erreurs (empty, pas valide, ...) seulement si le form a été complété
-            if ($_SESSION['formSubmitted'] && isset($_SESSION['errors']) && !empty($_SESSION['errors'])) {
-               //error_reporting(0);
-                 if (isset($_SESSION["checkPassword"])){
-                   echo $_SESSION["checkPassword"];
-                 }
-                  echo'<pre>';
-                  if (isset($_SESSION["checkEmail"])){
-                   echo $_SESSION["checkEmail"];
-                 }
-                  echo'<pre>';
-                  if (isset($_SESSION["matchPassword"])){
-                   echo $_SESSION["matchPassword"];
-                 }
-                 if (isset($_SESSION["checkDuplicates"])){
-                   echo $_SESSION["checkDuplicates"];
-                 }
-                  echo'<pre>';
-                 //session_destroy();
-               }
-            ?>
       </main>
    </body>
 </html>

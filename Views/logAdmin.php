@@ -11,6 +11,13 @@
       <button class="registration-button"><a href="registration.php">Retour inscription</a></button>
       <h1 class="form-title">Log in</h1>
       <form action="../Controlers/logAdmin.php" method="POST" class="login-form">
+         <?php
+            session_start();
+            if(isset($_SESSION["logError"])){
+               echo "<p style='color: red'>" . $_SESSION["logError"] . "</p>";
+               unset($_SESSION["logError"]);
+            }
+            ?>
          <p>
             <label for="email" class="form-label">Adresse e-mail</label>
             <input type="email" name="logMail" autocomplete="on" required="required" class="form-input">
@@ -25,12 +32,5 @@
             <input type="submit" value="Envoyer" class="form-button">
          </p>
       </form>
-      <?php
-         session_start();
-         if(!isset($_SESSION["errorLog"])){
-           echo $_SESSION["errorLog"];
-           //session_destroy();
-         }
-         ?>
    </body>
 </html>

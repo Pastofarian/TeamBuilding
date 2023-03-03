@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 session_start();
 //include('../Models/read.php');
@@ -113,12 +113,12 @@ $_SESSION['SoldOut'] = $isSoldOut;
 if ($activity && !$isSoldOut && empty($errors)) {
     $employe_id = insertEmploye($lastname, $firstname, $email, $diner, $postcode, $locomotion, $department);
     insertActivity($activity, $employe_id);
-    header($success);
-    //exit;
+    header($success); 
+    exit;
 } else {
     $_SESSION['errors'] = $errors;
     header($registration);
-    //exit;
+    exit;
 }
 
 $_SESSION['Participants'] = $participants;
