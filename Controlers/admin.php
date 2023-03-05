@@ -20,7 +20,7 @@ if (isset($_POST['logout'])) {
 // Delete participant
 if (isset($_POST['delete_participant'])) {
   $participant_id = $_POST['id'];
-  deleteEmployee($participant_id);
+  deleteParticipant($participant_id);
   header($admin);
   exit;
 }
@@ -28,25 +28,24 @@ if (isset($_POST['delete_participant'])) {
 // Update participant
 if (isset($_POST['update_participant']) && $_POST['update_participant'] == 'update_participant') {
   $id = $_POST['id'];
-  $firstName = $_POST['first_name'];
-  $lastName = $_POST['last_name'];
-  $email = $_POST['email'];
-  $postcode = getCpId($_POST['postcode']);
-  $locomotion = getLocomotionId($_POST['locomotion']);
-  $department = getDepartmentId($_POST['department']);
-  $diner = $_POST['diner'];
+  $firstName = sanitize_input($_POST['first_name']);
+  $lastName = sanitize_input($_POST['last_name']);
+  $email = sanitize_input($_POST['email']);
+  $postcode = sanitize_input(getCpId($_POST['postcode']));
+  $locomotion = sanitize_input(getLocomotionId($_POST['locomotion']));
+  $department = sanitize_input(getDepartmentId($_POST['department']));
+  $diner = sanitize_input($_POST['diner']);
   $activity = getActivityId($_POST['activity']);
-  //var_dump($_POST);
   updateParticipant($id, $lastName, $firstName, $email, $postcode, $locomotion, $department, $diner, $activity);
   header($admin);
   exit;
 }
 
 // Update activity
-if (isset($_POST['action']) && $_POST['action'] == 'update_activity') {
-  $activityId = $_POST['activity_id'];
-  $activityName = $_POST['activity_name'];
-  $activityMaxParticipants = $_POST['activity_max_participants'];
+if (isset($_POST['update_activity']) && $_POST['update_activity'] == 'update_activity') {
+  $activityId = sanitize_input($_POST['activity_id']);
+  $activityName = sanitize_input($_POST['activity_name']);
+  $activityMaxParticipants = sanitize_input($_POST['activity_max_participants']);
   updateActivity($activityId, $activityName, $activityMaxParticipants);
   header($admin);
   exit;
@@ -54,20 +53,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'update_activity') {
 
 // Insert new admin
 if (isset($_POST["PassNewAdmin"])) {
-  $data1 = $_POST["PassNewAdmin"];
+  $data1 = htmlspecialchars($_POST["PassNewAdmin"]);
   unset($_POST["PassNewAdmin"]);
 }
 
 if (isset($_POST["PassNewAdmin2"])) {
-  $data2 = $_POST["PassNewAdmin2"];
+  $data2 = htmlspecialchars($_POST["PassNewAdmin2"]);
   unset($_POST["PassNewAdmin2"]);
 }
 
 if (isset($_POST["MailNewAdmin"])) {
-  $email = $_POST["MailNewAdmin"];
+  $email = sanitize_input($_POST["MailNewAdmin"]);
   unset($_POST["MailNewAdmin"]);
 }
-
 
 // $data1 = isset($_POST["PassNewAdmin"]) ? $_POST["PassNewAdmin"] : "";
 // $data2 = isset($_POST["PassNewAdmin2"]) ? $_POST["PassNewAdmin2"] : "";

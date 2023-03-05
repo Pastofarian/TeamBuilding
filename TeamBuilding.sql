@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 03, 2023 at 10:46 PM
+-- Generation Time: Mar 05, 2023 at 10:50 AM
 -- Server version: 8.0.32-0ubuntu0.22.04.2
 -- PHP Version: 8.1.2-1ubuntu2.11
 
@@ -133,27 +133,15 @@ INSERT INTO `employe` (`id`, `nom`, `prenom`, `mail`, `souper`, `fk_cp`, `fk_loc
 (17, 'Hans', 'zimmer', 'zim@zim.de', 'non', 3, 1, 1),
 (18, 'Kursh', 'Hansi', 'kush@blind.de', 'non', 2, 1, 2),
 (19, 'Lione', 'Fabio', 'Rhapsody@fire.it', 'non', 2, 1, 1),
-(20, 'Lione', 'Fabio', 'Rhapsody@fire.it', 'non', 2, 1, 1),
-(22, 'Kursh', 'Ansi', 'azer@rte.com', 'oui', 2, 2, 4),
 (23, 'Lucassen', 'Arjen', 'ayreon@outlook.de', 'non', 3, 2, 2),
-(24, 'Lucassen', 'Arjen', 'ayreon@outlook.de', 'non', 2, 2, 3),
 (25, 'sonata', 'artica', 'arctica@outlook.com', 'oui', 2, 2, 3),
 (26, 'Michael', 'Kane', 'kane@gmail.com', 'oui', 1, 2, 3),
 (27, 'Shaffer', 'John', 'johnshaffer@iced.earth', 'non', 2, 2, 2),
 (28, 'King', 'Kerry', 'slayer@trash.us', 'non', 1, 1, 4),
-(29, 'Araya', 'Tom', 'slayer@trash.us', 'oui', 2, 2, 2),
 (30, 'Gossow', 'Angelz', 'arch@enemy.de', 'non', 2, 1, 3),
-(31, 'Hammet', 'Kurk', 'larsulrich@metalic.ca', 'non', 1, 1, 4),
-(32, 'Mast', 'todon', 'mast@todon.us', 'non', 2, 1, 2),
-(37, 'er', 'ee', 'azer@rte.com', 'non', 1, 2, 4),
-(39, 't', 'r', 'e@rker.gf', 'non', 1, 1, 3),
-(41, 'dalriada', 'dfe', 'davemurray@maiden.uk', 'non', 1, 1, 3),
-(42, 'reer', 'eze', 'larsulrich@metalic.ca', 'non', 2, 2, 2),
-(43, 'ethan', 'hunt', 'ethan@metalic.ca', 'oui', 2, 3, 2),
 (44, 'damon', 'drift', 'larsulri@metalic.ca', 'oui', 2, 1, 3),
-(46, 'ds', 'sd', 'larsulrich@metalic.ca', 'non', 1, 1, 2),
 (48, 'eraezra', 'zearrzae', 'axelrose@guns.us', 'oui', 2, 2, 3),
-(50, 'ffg', 'ggdf', 'axelroso@guns.us', 'non', 1, 2, 2),
+(50, 'Bond', 'James', 'bond@guns.uk', 'non', 1, 2, 2),
 (52, 'Tankian', 'Serj', 'serj@system.down', 'non', 1, 2, 2),
 (53, 'Daaron', 'Malakian', 'rpr@errr.po', 'non', 1, 1, 3),
 (64, 'Smith', 'Adrian', 'adriansmith@maiden.uk', 'non', 2, 1, 4),
@@ -163,9 +151,9 @@ INSERT INTO `employe` (`id`, `nom`, `prenom`, `mail`, `souper`, `fk_cp`, `fk_loc
 (68, 'Rudess', 'Jordan', 'jordan@key.us', 'non', 1, 1, 3),
 (69, 'Portnoy', 'Mike', 'mike@dt.us', 'oui', 3, 2, 2),
 (70, 'Petrucci', 'John', 'john@gmail.ud', 'oui', 2, 2, 2),
-(71, 'King', 'Kerry', 'slayer@raining.re', 'non', 2, 2, 3),
 (72, 'Bertels', 'Jeff', 'Bertels@outlook.be', 'oui', 2, 3, 3),
-(73, 'Laiho', 'Alexi', 'bodom@gmail.com', 'non', 2, 1, 1);
+(73, 'Laiho', 'Alexi', 'bodom@gmail.com', 'non', 2, 1, 1),
+(74, 'Amons', 'Amarg', 'arg@aragorn.be', 'oui', 2, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -184,36 +172,33 @@ CREATE TABLE `employe_activite` (
 --
 
 INSERT INTO `employe_activite` (`id`, `fk_activite`, `fk_employe`) VALUES
-(14, 5, 16),
-(15, 4, 17),
+(14, 1, 16),
+(15, 2, 17),
 (16, 2, 18),
 (17, 4, 19),
-(18, 4, 20),
-(19, 3, 23),
-(20, 4, 24),
-(21, 1, 25),
-(22, 5, 26),
-(23, 1, 27),
+(19, 1, 23),
+(21, 3, 25),
+(22, 2, 26),
+(23, 5, 27),
 (24, 2, 28),
-(25, 1, 29),
-(26, 5, 30),
+(26, 1, 30),
 (27, 3, 44),
-(30, 1, 48),
+(30, 5, 48),
 (31, 3, 44),
 (32, 3, 44),
-(34, 2, 50),
-(36, 5, 52),
-(37, 1, 53),
-(48, 5, 64),
+(34, 4, 50),
+(36, 1, 52),
+(37, 4, 53),
+(48, 1, 64),
 (49, 5, 65),
-(50, 2, 66),
-(51, 1, 67),
+(50, 3, 66),
+(51, 5, 67),
 (52, 5, 68),
 (53, 2, 69),
 (54, 2, 70),
-(55, 4, 71),
 (56, 4, 72),
-(57, 3, 73);
+(57, 3, 73),
+(58, 5, 74);
 
 -- --------------------------------------------------------
 
@@ -301,7 +286,7 @@ ALTER TABLE `activite`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `cp`
@@ -319,13 +304,13 @@ ALTER TABLE `departement`
 -- AUTO_INCREMENT for table `employe`
 --
 ALTER TABLE `employe`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `employe_activite`
 --
 ALTER TABLE `employe_activite`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `Locomotion`

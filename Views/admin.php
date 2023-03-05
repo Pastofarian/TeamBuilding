@@ -117,7 +117,7 @@
                      <input type="hidden" name="activity_id" value="<?= $activity['id'] ?>">
                      <td><input type="text" name="activity_name" value="<?= $activity['nom'] ?>"></td>
                      <td><input type="number" name="activity_max_participants" value="<?= $activity['nbmax'] ?>"></td>
-                     <td><button type="submit" name="action" value="update_activity">Modifier</button></td>
+                     <td><button type="submit" name="update_activity" value="update_activity">Modifier</button></td>
                   </form>
                </tr>
                <?php endforeach; ?>

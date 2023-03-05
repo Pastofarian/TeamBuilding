@@ -10,8 +10,8 @@ $logLine = null; //1 admin/password
 $isPassAndLogOk = false;
 $islogOk = false;
 $error = false;
-$email = $_POST["logMail"];
-$data = $_POST["logPass"]; 
+$email = htmlspecialchars($_POST["logMail"]);
+$data = htmlspecialchars($_POST["logPass"]); 
 unset($_POST["logPass"]);
 $login = 'Location: ../Views/logAdmin.php';
 $admin = 'Location: ../Views/admin.php';

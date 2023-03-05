@@ -1,6 +1,6 @@
 <?php
 
-function deleteEmployee($id) {
+function deleteParticipant($id) {
   include('connection.php');
 
   try {
